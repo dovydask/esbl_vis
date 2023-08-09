@@ -201,12 +201,12 @@ def plot_od_rho_heatmaps(all_raw, all_meta, file_save_path=None, cmap1="YlOrBr",
 
     plt.text(m.shape[1]/2, m.shape[0]+m.shape[0]*0.5, "Experiment/plate", ha="center")
     plt.subplots_adjust(hspace=0.05)
-    if file_save_path is not None: plt.savefig(file_save_path)
+    if file_save_path is not None: plt.savefig(file_save_path, bbox_inches="tight")
     if show: plt.show()
     else: plt.close()
 
 
-def plot_end_ods(all_raw, all_meta, figsize=(25, 4), file_save_dir=None, show=True, normalize=False):
+def plot_end_ods(all_raw, all_meta, figsize=(25, 4), file_save_path=None, show=True, normalize=False):
     
     def get_xtick_labels_and_positions(a):
         last = a[0]
@@ -254,8 +254,8 @@ def plot_end_ods(all_raw, all_meta, figsize=(25, 4), file_save_dir=None, show=Tr
         # _, nc_sorted_plates = zip(*sorted(zip(list(nc_labels), list(nc_plates))))
         # _, nc_sorted_strains = zip(*sorted(zip(list(nc_labels), list(nc_strains))))
         
-        nc_sorted_plates = nc_labels[np.array(nc_sorted_idx)]
-        nc_sorted_strains = nc_strains[np.array(nc_sorted_idx)]
+        nc_sorted_plates = np.array(all_plate_numbers)[np.array(nc_sorted_idx)]
+        nc_sorted_strains = strains[np.array(nc_sorted_idx)]
 
         final_plates = list(c_plates) + list(nc_sorted_plates)
         final_labels = list(c_labels) + list(nc_sorted_labels)
@@ -322,6 +322,6 @@ def plot_end_ods(all_raw, all_meta, figsize=(25, 4), file_save_dir=None, show=Tr
         sc += 1
         plt.margins(0)
     plt.subplots_adjust(hspace=1.5)
-    if file_save_dir is not None: plt.savefig(file_save_dir + "/" + title + ".png")
+    if file_save_path is not None: plt.savefig(file_save_path, bbox_inches="tight")
     if show: plt.show()
     else: plt.close()
